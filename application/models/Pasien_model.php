@@ -6,16 +6,15 @@ class Pasien_model extends CI_Model {
         $this->load->database(); // Memuat pustaka database
     }
 
-    public function get_last_no_antrian() {
+    public function get_last_antrian_number() {
         $this->db->select_max('no_antrian');
-        $query = $this->db->get('pasien');
-        $row = $query->row();
-        return ($row->no_antrian) ? $row->no_antrian + 1 : 1;
+        $result = $this->db->get('pasien')->row();
+        return $result->no_antrian ? $result->no_antrian + 1 : 1;
     }
 
     // Fungsi untuk menambahkan data pasien
     public function tambah_pasien($data) {
-        $data['no_antrian'] = $this->get_last_no_antrian();
+        $data['no_antrian'] = $this->get_last_antrian_number();
         $data['status'] = 'belum datang'; // Status otomatis diisi 'dalam antrian'
         $this->db->insert('pasien', $data);
         return $this->db->insert_id();
@@ -23,6 +22,18 @@ class Pasien_model extends CI_Model {
         // $this->db->insert('pasien', $data);
         // return $this->db->insert_id();
     }
+
+    public function reset_antrian_on_date_change() {
+        $today_date = date('Y-m-d');
+        $yesterday_date = date('Y-m-d', strtotime('-1 day'));
+    
+        if ($this->db->get_where('pasien', array('waktu_daftar >=' => $yesterday_date))->num_rows() > 0) {
+            // Jika ada entri pasien yang terdaftar pada hari sebelumnya, reset nomor antrian menjadi 1
+            $this->db->set('no_antrian', 1);
+            $this->db->update('pasien');
+        }
+    }
+    
 
     // Tambahkan fungsi untuk mengubah status menjadi 'selesai'
     public function selesai_pasien($id) {

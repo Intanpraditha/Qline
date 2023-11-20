@@ -38,58 +38,6 @@
       background: #fff;
       /* box-shadow: 0px 0px 10px gray; */
       }
-      /* .form-left-decoration,
-      .form-right-decoration {
-      content: "";
-      position: absolute;
-      width: 50px;
-      height: 20px;
-      border-radius: 20px;
-      background: #88B44E;
-      }
-      .form-left-decoration {
-      bottom: 60px;
-      left: -30px;
-      }
-      .form-right-decoration {
-      top: 60px;
-      right: -30px;
-      }
-      .form-left-decoration:before,
-      .form-left-decoration:after,
-      .form-right-decoration:before,
-      .form-right-decoration:after {
-      content: "";
-      position: absolute;
-      width: 50px;
-      height: 20px;
-      border-radius: 30px;
-      background: #fff;
-      }
-      .form-left-decoration:before {
-      top: -20px;
-      }
-      .form-left-decoration:after {
-      top: 20px;
-      left: 10px;
-      }
-      .form-right-decoration:before {
-      top: -20px;
-      right: 0;
-      }
-      .form-right-decoration:after {
-      top: 20px;
-      right: 10px;
-      }
-      .circle {
-      position: absolute;
-      bottom: 80px;
-      left: -55px;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: #fff;
-      } */
       .form-inner {
       padding: 40px;
       }
@@ -107,28 +55,29 @@
       .form-inner textarea {
       resize: none;
       }
-      button {
+      #myBtn {
       width: 100%;
-      padding: 10px;
+      padding: 15px 25px 15px 25px;
       margin-top: 20px;
       border-radius: 20px;
       border: none;
-      /* border-bottom: 4px solid #3e4f24; */
       background: #f754b8; 
       font-size: 16px;
       font-weight: 400;
       color: #fff;
+      cursor:pointer;
+    }
+    
+    #myBtn:hover{
+          background: #E20B90; 
       }
-      button:hover {
-      background: #3e4f24;
-      } 
+
       td{
         padding: 10px;
       }
-      a{
+      .batal{
         color:red;
         align-items:center;
-        padding-top:50x;
         text-decoration:none;
       }
       @media (min-width: 568px) {
@@ -136,21 +85,51 @@
       width: 60%;
       }
       }
-      .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
+      /* The Modal (background) */
+        .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
         }
+
+        /* Modal Content */
         .modal-content {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        }
+
+        /* The Close Button */
+        .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+        }
+        .aksi{
+            margin: 30px;
+        }
+        @media print {
+        #printButton, .close {
+            display: none;
+        }
         }
     </style>
 </head>
@@ -196,61 +175,86 @@
                     <td>: <?= $pasien->keluhan; ?></td>
                 </tr>
             </table>
-            <button type='button' id="showModal">Selesai</button>
-            <br><br>
-            <a href="<?= base_url('home/hapus/' . $pasien->id_pasien) ?>" onclick="return confirm('Apakah Anda yakin ingin membatalkan?')">batalkan pendaftaran?</a>
+            <div class="aksi">
+                <a id="myBtn">Unduh kartu antrian</a><br><br>
+                <a href="<?= base_url('home/hapus/' . $pasien->id_pasien) ?>" class="batal" onclick="return confirm('Apakah Anda yakin ingin membatalkan?')">batalkan pendaftaran?</a>
+            </div>
         </div>
     </form>
 
-    <div class="modal" id="myModal">
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
         <div class="modal-content">
-            <!-- Display data here -->
+            <span class="close">&times;</span>
             <center>
                 <h3>Praktek Mandiri Bidan Yeni Mariana, A.Md. Keb.</h3>
+                <p>Jl. Urip Sumoharjo No.78 Kec. Tanggul, Kabupaten Jember, Jawa Timur</p>
                 <hr>
-                <h1><?= $pasien->no_antrian; ?></h1>
+                <p>nomor antrian</p>
+                <h1 style="font-size:60px;"><?= $pasien->no_antrian; ?></h1>
+                
+                <p>nama pendaftar : <?= $pasien->nama; ?></p>
+                <p>waktu daftar : <?= $pasien->waktu_daftar; ?></p>
+                <hr>
+                <h3>TERIMA KASIH</h3>
+                <button id="printButton">Unduh</button>
             </center>
-            <button type="button" onclick="hideModal()">Close</button>
         </div>
     </div>
-
+    <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
     <script type="text/javascript">
-    function send() {
-        // Get the phone number
-        var phoneNumber = '62' + <?= $pasien->no_telp; ?>; // assuming the phone number is in Indonesian format
 
-        // Get other details for the message
-        var nomorAntrian = '<?= $pasien->no_antrian; ?>';
-        var namaPasien = '<?= $pasien->nama; ?>';
-        var keluhan = '<?= $pasien->keluhan; ?>';
+        var modal = document.getElementById("myModal");
 
-        // Construct the WhatsApp message
-        var whatsappMessage = encodeURIComponent(
-            'Permisi, ' +
-            'saya ingin mengonfirmasi bahwa ' +
-            'Nomor Antrian *' + nomorAntrian + '* atas nama *' + namaPasien +
-            '* dengan keluhan ' + keluhan + '. Apakah ada kendala sehingga tidak dapat datang?' +
-            ' Terima kasih.'
-        );
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
 
-        // Create the WhatsApp link
-        var whatsappLink = 'https://api.whatsapp.com/send?phone=' + phoneNumber + '&text=' + whatsappMessage;
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
 
-        // Open WhatsApp in a new tab with the pre-filled message
-        window.open(whatsappLink, '_blank');
-
-         // Function to show the modal
-        function showModal() {
-            document.getElementById('myModal').style.display = 'flex';
+        // When the user clicks the button, open the modal 
+        btn.onclick = function() {
+        modal.style.display = "block";
         }
 
-        // Function to hide the modal
-        function hideModal() {
-            document.getElementById('myModal').style.display = 'none';
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+        modal.style.display = "none";
         }
 
-        // Attach click event to the "Selesai" button
-        document.getElementById('showModal').addEventListener('click', showModal);
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+        }
+        // Ganti bagian yang menangani klik tombol cetak dengan kode ini
+
+        // Ganti bagian yang menangani klik tombol cetak dengan kode ini
+
+        // Tangani klik tombol cetak
+        printButton.onclick = function() {
+            var modalContent = document.querySelector(".modal-content");
+            var printBtn = document.getElementById("printButton");
+
+            // Sembunyikan tombol cetak sementara
+            printBtn.style.display = "none";
+
+            // Mengonversi elemen modal menjadi file PDF
+            html2pdf(modalContent, {
+                margin: 10,
+                filename: 'kartu-antrian.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+            }).then(() => {
+                // Tampilkan kembali tombol cetak setelah selesai
+                printBtn.style.display = "block";
+            });
+        };
+
+
+
 </script>
 
 

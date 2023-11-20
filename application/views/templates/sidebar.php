@@ -11,8 +11,8 @@
                 <!-- <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div> -->
-                <img src="<?php echo base_url('landing/img/logoputih.png'); ?>" style="width: 30px;;" alt="">
-                <div class="sidebar-brand-text mx-3">sabine</div>
+                <!-- <img src="<?php echo base_url('landing/img/logoputih.png'); ?>" style="width: 30px;" alt=""> -->
+                <div class="sidebar-brand-text mx-3">qline</div>
             </a>
 
             <!-- Divider -->
@@ -135,11 +135,11 @@
             </li> -->
             <hr class="sidebar-divider d-none d-md-block">
 
-            <!-- <li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('users/') ?>">
                     <i class="fas fa-fw fa-user-circle"></i>
                     <span>Admin</span></a>
-            </li> -->
+            </li>
             <!-- <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('waktu/') ?>">
                     <i class="fas fa-fw fa-chart-area"></i>

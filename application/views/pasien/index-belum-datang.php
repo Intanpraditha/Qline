@@ -64,43 +64,32 @@
     </div>
 </div>
 <script type="text/javascript">
-    function checkForStatusChange() {
-        // Buat permintaan AJAX untuk memeriksa perubahan status
-        $.ajax({
-            url: '<?= base_url('pasien/check_status_change'); ?>',
-            type: 'GET',
-            success: function(data) {
-                if (data.status_changed) {
-                    // Status berubah, lakukan reload halaman
-                    location.reload();
-                }
-            }
-        });
-    }
-
-    // Panggil fungsi checkForStatusChange secara berkala
-    setInterval(checkForStatusChange, 5000); // Contoh: cek setiap 5 detik
-
     function sendWhatsApp(patientId) {
-        // Assuming the sender's number is 085706298928
-        var senderNumber = '6285706298928'; // Format without leading 0
+    // Assuming the sender's number is 085706298928
+    var senderNumber = '6285706298928'; // Format without leading 0
 
-        // Get the patient's phone number based on the ID
-        var phoneNumber = '62' + <?= $p->no_telp; ?>; // Assuming the phone number is in Indonesian format
+    // Get the patient's phone number based on the ID
+    var phoneNumber = '62' + <?= $p->no_telp; ?>; // Assuming the phone number is in Indonesian format
 
-        // Construct the WhatsApp message
-        var whatsappMessage = encodeURIComponent(
-            'Halo, Anda memiliki janji pada ' + '<?= $p->waktu_daftar; ?>' +
-            '. Jangan lupa datang ya! Terima kasih.'
-        );
+    // Construct the WhatsApp message with the customized content
+    var whatsappMessage = encodeURIComponent(
+        'Permisi, kami dari Praktek Mandiri Bidan Yeni Mariana, A.Md. Keb.\n' +
+        'ingin mengonfirmasi, pasien atas nama : \n' +
+        'Nama: <?= $p->nama; ?>\n' +
+        'Nomor Antrian: <?= $p->no_antrian; ?>\n' +
+        'Keluhan: <?= $p->keluhan; ?>\n\n' +
+        'Apabila ada pembatalan kunjungan, mohon segera konfirmasi ulang kepada kami.\n\nTerimakasih'
+    );
 
-        // Create the WhatsApp link
-        var whatsappLink = 'https://wa.me/' + phoneNumber + '?text=' + whatsappMessage + '&source=' + senderNumber;
+    // Create the WhatsApp link
+    var whatsappLink = 'https://wa.me/' + phoneNumber + '?text=' + whatsappMessage + '&source=' + senderNumber;
 
-        // Open WhatsApp in a new tab with the pre-filled message
-        window.open(whatsappLink, '_blank');
-    }
+    // Open WhatsApp in a new tab with the pre-filled message
+    window.open(whatsappLink, '_blank');
+}
+
 </script>
+
 
 </body>
 </html>

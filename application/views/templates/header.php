@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>|| Sabine</title>
+    <title>|| Qline</title>
 
     <!-- Custom fonts for this template-->
     <link href="<?php echo base_url('dist/'); ?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

@@ -148,7 +148,7 @@
         <input type="number" name="no_bpjs" placeholder="Nomor BPJS" id="no_bpjs_group">
         <!-- <span id="noBpjsWarning" style="color: red; display: none;"></span> -->
         <textarea name="keluhan" placeholder="Keluhan" rows="5"></textarea>
-        <button id="simpanButton" type="submit" class="btn btn-primary">Simpan</button>
+        <button id="simpanButton" type="submit" class="btn btn-primary">Daftar</button>
       </div>
     </form>
   

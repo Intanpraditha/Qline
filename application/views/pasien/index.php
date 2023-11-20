@@ -1,10 +1,10 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h4 class="m-0 font-weight-bold text-dark">Dalam antrian</h4>
-    </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h4 class="m-0 font-weight-bold text-dark">Dalam antrian</h4>
+        </div>
     <div class="card-body">
         <div class="card-header py-3">
             <a href="<?= base_url('pasien/tambah') ?>" class="m-0 font-weight-bold btn btn-primary" >Tambah pasien</a>
